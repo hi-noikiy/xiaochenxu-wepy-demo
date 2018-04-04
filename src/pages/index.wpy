@@ -1,0 +1,299 @@
+<style lang="css">
+  @import '/zanui/panel.wxss';
+  @import '/zanui/btn.wxss';
+</style>
+
+<style lang="less">
+.banner-image{
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+}
+
+.progress-wrap{
+  margin: 19rpx 30rpx;
+  padding: 22rpx 42rpx 13rpx 42rpx;
+  border-radius: 10rpx;
+  background-image: url("https://small-progress.oss-cn-beijing.aliyuncs.com/images/progress-bg.png");
+  background-size: 100% 100%;
+  height: 220rpx;
+  box-sizing: border-box;
+  padding-bottom: 80rpx;
+  box-shadow: 1px 1px 8px #E3DEDE ,-1px -1px 8px #E3DEDE;
+}
+.progress-wrap .doctor_name{
+  font-size: 30rpx;
+}
+.pro-swiper{height: 310rpx;}
+.progress-wrap .title{display: inline-block;width:222rpx}
+.prgs-txt1{
+  position: relative;
+  font-size: 26rpx;
+  height: 37rpx;
+  line-height: 37rpx;
+  padding: 6rpx 0;
+  border-bottom:1rpx #979797 dashed;
+}
+
+.progress-wrap .patient-info{
+  margin-top: 24rpx;
+}
+.pro-swiper+.function-btns{
+  margin-top: -20rpx;
+}
+.function-btns{padding: 31rpx;font-size: 28rpx;}
+.btn-item{position: relative;}
+.sub-btn{position: absolute;top:0;bottom: 0;width:100%;opacity: 0;}
+
+.coupon-wrap{padding:0 20rpx 22rpx;}
+.coupon-title,.nearby-title{padding-top:23rpx;padding-bottom: 8rpx;}
+.coupon-image,.coupon-shadow{width:710rpx;display: block;}
+.coupon-image{height: 160rpx;}
+.coupon-shadow{height:8rpx;}
+.coupon-item{margin-bottom: 12rpx;}
+
+.nearby-shop{padding:0 20rpx 10rpx;}
+.shop-wrp{padding: 18rpx 0;border-bottom: 1px solid #E6E6E6;position: relative;}
+.shop{width: 200rpx;height:140rpx ;margin-right: 20rpx;vertical-align: middle;}
+.shop-info{width: 440rpx;line-height: 160%;}
+.shop-label{background:#F9F3F3;display:inline-block;margin-right: 10rpx;padding:4rpx;margin-top: 10rpx;border-radius: 5rpx;}
+.add-info{margin-top:10rpx;}
+</style>
+<template>
+  <scroll-view class="container" scroll-y="{{true}}">
+    <swiper
+        indicator-dots="{{banners.length > 1}}"
+        autoplay="{{true}}"
+        interval="{{3000}}"
+        duration="{{500}}"
+        indicator-active-color="rgba(153,35,36,0.9)"
+        wx-if="{{banners.length > 0}}">
+        <repeat for="{{banners}}" key="index" index="index" item="item">
+          <swiper-item>
+            <image src="{{ item }}" class="banner-image"/>
+          </swiper-item>
+        </repeat>
+    </swiper>
+    <view class="zan-panel-title">普通按钮</view>
+    <view class="zan-panel">
+      <view class="zan-btns">
+        <button class="zan-btn">取消订单</button>
+        <button class="zan-btn zan-btn--primary">确认付款</button>
+        <button class="zan-btn zan-btn--danger">确认付款</button>
+        <button class="zan-btn zan-btn--warn">确认付款</button>
+      </view>
+    </view>
+    <!--入口页，消息推送没有足够的formtId,prepayid后台不知啥时用不了，通过其他用户操作产生formtId，供后台使用-->
+    <form bindsubmit="formSubmit" report-submit="true">
+      <view class="flex-wrp function-btns text-center bg-white">
+        <navigator class="flex-item btn-item" url="/pages/shop/address/index">
+          <i class="iconfont-hospital"></i>
+          <view>当天挂号</view>
+          <button class="sub-btn" formType="submit"></button>
+        </navigator>
+        <navigator class="flex-item btn-item" url="/pages/appointment/list/index">
+          <i class="iconfont-book"></i>
+          <view>预约取号</view>
+          <button class="sub-btn" formType="submit"></button>
+        </navigator>
+        <navigator class="flex-item btn-item" url="/pages/payOrder/list/index">
+          <i class="iconfont-pay"></i>
+          <view>门诊缴费</view>
+          <button class="sub-btn" formType="submit"></button>
+        </navigator>
+
+        <!--
+        <navigator class="flex-item btn-item" url="/page/navigate/navigate?title=navigate">
+          <i class="iconfont-faq"></i>
+          <view>诊后咨询</view>
+        </navigator>
+        -->
+      </view>
+    </form>
+
+    <!--优惠券-->
+    <!--
+    <view class="coupon-wrap mt20rpx bg-white">
+      <view class="coupon-title text-666 text-size30">
+        精选优惠券
+        <view class="pull-right">
+           <i class="iconfont iconfont-location mr10rpx text-d6a058"></i>
+           <span class="text-999">{{city}}</span>
+        </view>
+      </view>
+      <block wx:for="{{[1,2]}}" wx:key="{{item}}">
+        <view class="coupon-item">
+          <image src="../../assets/img/1.png" class="coupon-image"/>
+          <image src="../../assets/img/shadow.jpg" class="coupon-shadow"/>
+        </view>
+      </block>
+    </view>
+    -->
+
+    <!--附近医馆-->
+    <view class="nearby-shop mt20rpx bg-white">
+      <view class="nearby-title text-333 text-size30">
+        附近医馆
+        <view class="pull-right">
+           <i class="iconfont iconfont-location mr10rpx text-d6a058"></i>
+           <span class="text-999 text-size26">{{city}}</span>
+        </view>
+      </view>
+
+      <form bindsubmit="formSubmit" report-submit="true">
+        <repeat for="{{shopList}}" key="index" index="index" item="item">
+          <navigator class="shop-wrp flex-wrp" url="{{'/pages/registration/doctor/index?shopId=' + item.shop_no }}">
+            <view><image src="{{item.showShopImg}}" class="shop"/></view>
+            <view class="shop-info flex-item">
+              <view>
+                <span class="text-size30">{{item.shop_nick_name}}</span>
+                <span class="text-999 pull-right">{{item.showDistance}}{{ item.distance > 1000 ? "公里" : "米" }}</span>
+              </view>
+              <view class="text-999">
+                <block wx:for="{{item.showTagList}}" wx:for-index="idx" wx:key="{{idx}}">
+                  <span class="shop-label">{{item}}</span>
+                </block>
+              </view>
+              <view class="add-info intoneline text-666">地址：{{item.shop_addr}}</view>
+            </view>
+            <button class="sub-btn" formType="submit"></button>
+          </navigator>
+        </repeat>
+      </form>
+    </view>
+
+  </scroll-view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect ,getStore} from 'wepy-redux'
+  import Toast from 'wepy-com-toast'
+
+  import Banner from '@/api/banner'
+  import Shop from '@/api/shop'
+  import { host } from "@/config/config"
+  import { getMapInfo } from "@/utils/location"
+  import { decodeSign, distanceDisplay, getTodayTime} from "@/utils/tools";
+  import { myAlert } from "@/utils/modal";
+  import { setShopList } from '@/store/actions'
+
+  @connect({
+    shopList (state) {
+      return state.shop.shopList
+    }
+  },{
+    setShopList
+  })
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '固生堂+'
+    }
+    components = {
+
+    }
+    data = {
+      deal:[],
+      banners: [],
+      city:''
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+    onLoad() {
+      this.getLocation();
+    }
+    async getBanner( city_no ){
+      const res = await Banner.getList({city_no:city_no,platform:"16"})
+      if( res.status == 0 ){
+        this.banners = this.beforeSetBannerData(res.data);
+        this.$apply();
+      }else {//提示
+        myAlert({ content: res.message });
+      }
+    }
+    beforeSetBannerData( data ) {
+      return data.map((item,index)=>{
+        return host.dr_img + item.img_url;
+      })
+    }
+    getLocation(){
+      getMapInfo().then(( res )=>{
+        let { latitude, longitude, regeocodeData } = res[0];
+        let { citycode, city } = regeocodeData.addressComponent;
+        this.loadData(city, citycode, latitude, longitude);
+      }).catch(( res )=>{
+        myAlert({ content: "获取城市失败,将默认定位到广州" });
+        this.loadData("广州市", "020", 23.130081,113.264468);
+      })
+    }
+    //加载附近医馆和城市
+    loadData(city, citycode, latitude, longitude){
+      this.city = city;
+      this.getBanner( citycode )
+      this.nearbyShop(citycode, latitude, longitude);
+    }
+    async nearbyShop(cityNo,lat,log){
+      let param = {
+        city_no: cityNo,
+        is_detail: 1,
+        lati: lat * 1000000,
+        longi: log * 1000000,
+        push_type: 7,
+        prog_opt: 128,
+        query_type: 0
+      }
+      let res = await Shop.getList(param);
+
+      if( res.status == 0 ){
+        if ( res.shop_list ){
+          let list = distanceDisplay(res.shop_list);
+          list.map(item => {
+            return Object.assign(item, {
+              showShopImg: item.shop_img.split(";")[0],
+              shop_img: item.shop_img.split(";")[0]
+            })
+          })
+          this.beforeSetShop(list);
+          const store = getStore()
+          store.dispatch(setShopList(list))
+
+          //this.shopList = list;
+          this.$apply();
+        }
+
+        wx.hideLoading();
+      }else{
+        myAlert({ content: res.message });
+      }
+    }
+    beforeSetShop(list){
+      list.forEach(( item , index )=>{
+        item.showShopImg = host.dr_img + item.shop_img;
+        item.showTagList = this.getShopTag(item.prog_opt)
+      })
+    }
+    //医馆标签
+    getShopTag( progOpt ) {
+      let tagList = [];
+      let shopTagMap = { "0": "理疗", "1": "公医", "2": "医保", "4": "中药代煎", "5": "中药代寄" };
+      Object.keys(shopTagMap).forEach((item) => {
+        if ( decodeSign( progOpt, item ) ) {
+          tagList.push( shopTagMap[item] )
+        }
+      });
+      return tagList;
+    }
+  }
+</script>

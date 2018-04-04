@@ -1,0 +1,485 @@
+<style lang="less">
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/*reset*/
+page{height: 100%;font-family: PingFangSC-Regular;line-height: 150%;font-size: 30rpx;overflow-x: hidden;}
+navigator:active{background-color: transparent;}
+article,div,p,br,ul,li{display:block;}
+strong,em{font-weight: bold;}
+table{display: table;width: 100%;}
+tr{display:block;width: 100%;}
+td{display: table-cell;}
+
+/*字体图标*/
+@font-face {
+  font-family: 'iconfont';  /* project id 400512 */
+  src: url('//at.alicdn.com/t/font_400512_rfteg8gubzw7b9.eot');
+  src: url('//at.alicdn.com/t/font_400512_rfteg8gubzw7b9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_400512_rfteg8gubzw7b9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_400512_rfteg8gubzw7b9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_400512_rfteg8gubzw7b9.svg#iconfont') format('svg');
+}
+
+.iconfont{
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: middle;
+}
+
+.iconfont-location:after{content: "\e60b"}/*地址*/
+.iconfont-success:after{content: "\e60f"}/*对号*/
+.iconfont-edit:after{content: "\e61d"}/*编辑*/
+.iconfont-cancel:after{content: "\e615"}/*取消*/
+.iconfont-search:after{content: "\e61e"}/*搜索*/
+.iconfont-arrow-right:after{content: "\e60c"}
+.iconfont-clock:after{content: "\e600"}
+.iconfont-stethoscope:after{content: "\e621"}/*听诊器*/
+.iconfont-file:after{content: "\e624"}/*文件*/
+.iconfont-file-2:after{content: "\e620"}/*文件2*/
+.iconfont-talk:after{content: "\e625"}/*聊天*/
+.iconfont-light:after{content: "\e622"}/*灯*/
+.iconfont-set:after{content: "\e623"}/*设置*/
+.iconfont-map:after{content: "\e60e"}/*设置*/
+
+.iconfont-hospital,.iconfont-book,.iconfont-pay,.iconfont-faq{
+  display: inline-block;
+  width: 94rpx;
+  height: 94rpx;
+  background-size:94rpx 94rpx;
+}
+
+/*注意路径是相对于显示的页面的,层级不同的页面会出问题*/
+.iconfont-hospital{
+  background-image: url("https://small-progress.oss-cn-beijing.aliyuncs.com/images/hospital.png");
+}
+.iconfont-book{
+  background-image: url("https://small-progress.oss-cn-beijing.aliyuncs.com/images/book.png");
+}
+.iconfont-pay{
+  background-image: url("https://small-progress.oss-cn-beijing.aliyuncs.com/images/pay.png");
+}
+.iconfont-faq{
+  background-image: url("https://small-progress.oss-cn-beijing.aliyuncs.com/images/faq.png");
+}
+
+
+/*浮动*/
+.pull-left{float: left;}
+.pull-right{float: right!important;}
+
+/*清除浮动*/
+.clearfix:after{content:""; display:block; clear:both;}
+.clearfix{zoom:1;}
+
+
+/*弹性布局*/
+.flex-wrp{
+    display:-webkit-box;display:box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+    -webkit-box-align:center;box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;
+}
+.space-between{
+  -webkit-justify-content:space-between;
+  justify-content:space-between;
+}
+.flex-item{-webkit-box-flex:1;box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;}
+.flex-item-2{-webkit-box-flex:2;box-flex:2;-webkit-flex:2;-ms-flex:2;flex:2;}
+
+/*单行文本溢出显示省略号*/
+.intoneline{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/*2行文本溢出显示省略号*/
+.intwoline{
+  display:-webkit-box!important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+
+
+/*按钮样式重置*/
+button[type="warn"]{background:#C3170A;}
+button[disabled][type="warn"]{background:#ADADAD;}
+button[disabled][type="warn"]:active{background:#AD4F50;}
+
+/*自定义按钮*/
+.btn{border-radius:5rpx;vertical-align: middle;display: inline-block;}
+.btn.disabled{background:#ADADAD}/*禁用样式*/
+.btn-normal{font-size:26rpx;padding: 11.5rpx 33.5rpx;}/*正常尺寸按钮*/
+.btn-bigger{font-size:26rpx;padding: 13rpx 46rpx;}/*正常尺寸按钮*/
+.btn-small{font-size:24rpx;padding: 4rpx 11rpx;}/*小按钮*/
+.btn-khaki{background: #D6A058;color:white;}/*土黄按钮*/
+.btn-red{background: #C3170A;color:white;}/*红色按钮*/
+.btn-green{background: #2ab245;color:white;}/*绿色按钮*/
+.btn-white{border:1px solid #cccccc;color:#333333;}/*镂空白色按钮*/
+
+
+
+/*字体颜色*/
+.text-white{color: white;}
+.text-green{color: #2BA245;}
+.text-blue{color:#3071B9;}/*链接蓝色*/
+.text-red{color:#C3170A}/*主色调红色*/
+.text-666{color: #666666;}
+.text-333{color:#333333;}
+.text-999{color:#999999}
+.text-d6a058{color:#d6a058}
+.text-gray{color: #d0d0d0;}
+.text-ccc{color:#CCCCCC}
+
+/*文字对齐方式*/
+.text-left{text-align: left;}
+.text-right{text-align: right;}
+.text-center{text-align: center;}
+
+/*字体大小*/
+.text-size36{font-size: 36rpx}
+.text-size32{font-size: 32rpx}
+.text-size30{font-size: 30rpx}
+.text-size28{font-size: 28rpx}
+.text-size26{font-size: 26rpx}
+.text-size24{font-size: 24rpx}
+.text-size22{font-size: 22rpx}
+.strong{
+  font-size: 16px;
+  font-weight: bold
+}
+
+/*背景颜色*/
+.bg-white{background: white;}
+.bg-F9F3F3{background: #F9F3F3;}/*背景淡红色*/
+.bg-B5452F{background:#B5452F;}
+
+/*字体颜色  */
+.font-gray{color: #adadad;} /*灰色字体*/
+
+/*间距*/
+.mt20rpx{margin-top:20rpx;}
+.mt30rpx{margin-top:30rpx;}
+.mb20rpx{margin-bottom:20rpx;}
+.mr10rpx{margin-right: 10rpx;}
+.mr20rpx{margin-right: 20rpx;}
+.mr17rpx{margin-right:17rpx; }
+
+.pd20rpx{padding: 20rpx}
+
+.container{font-family: PingFangSC-Regular;line-height: 150%;font-size: 26rpx;background:#F9F3F3;height: 100%;overflow:auto;position: relative;box-sizing:border-box;}
+.container-padding{padding: 22rpx 20rpx}
+
+/*搜索*/
+.simple-search-wrp{padding:20rpx 30rpx ;}
+.simple-search-bg{
+  border: 1rpx solid #CCCCCC;
+  border-radius: 5rpx;
+  background: white url("../../../assets/img/search.png") 21rpx 22rpx no-repeat;
+  background-size:32rpx 38rpx;
+  background-origin:border-box;
+  background-clip:border-box;
+  padding-left:80rpx;
+}
+.simple-search{
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+/*列表*/
+.list-block{padding: 0 0 0 30rpx;font-size: 32rpx;border-bottom: 1px solid #e6e6e6;}
+.list-block .block-item{padding: 30rpx 30rpx 30rpx 0;border-bottom: 1px solid #e6e6e6;}
+.list-block .block-item:last-child{border: none;}
+.list-block .item-input,.list-block .item-textarea{display: inline-block;vertical-align: middle;width: 496rpx;}
+.list-block .radio-group{display: inline-block;}
+.list-block .item-title{display: inline-block;width: 135rpx;}
+
+/*当天挂号医生列表*/
+.doc-list-block .portrait{width:100rpx ;height: 100rpx;border-radius: 50%;}
+.doc-block-item{padding: 0 30rpx;border-bottom: 1rpx solid #CCCCCC;margin-top:20rpx}
+.doc-info-top{border-bottom: 1rpx dashed #E6E6E6;padding: 30rpx 0}
+.good-at{line-height: 43rpx;margin: 30rpx 0;}
+.doc-info{width: 57%;}
+
+/*地址列表*/
+.list-ul-block{line-height: 160%;}
+.list-ul-block li{
+  padding:20rpx 30rpx;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.icon-wrp{width: 58rpx;border-left: 1px solid #CCCCCC;margin-left: 30rpx;padding: 20rpx 0;}
+
+/*待取号列表*/
+.list-block-2 .portrait{width: 100rpx;height: 100rpx;border-radius: 50%;margin-right: 20rpx;}
+.block-item-2 {margin-top:20rpx;background: white;}
+.block-item-2 .txt-1,.block-item-2 .txt-2{padding: 30rpx;}
+.block-item-2 .txt-2{border-top:1rpx solid #E6E6E6;border-bottom:1rpx solid #E6E6E6;}
+
+/*按钮空白区*/
+.btn-wrp{padding:40rpx;}
+
+/*地址对话标*/
+ .warm-label {
+  width: 120rpx;
+  height:30rpx;
+  line-height: 30rpx;
+  background: #C3170A;
+  color:white;
+  position: relative;
+  text-align: center;
+  font-size: 22rpx;
+}
+
+ .warm-label:before {
+    content:"";
+    position: absolute;
+    right: 100%;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-top: 15rpx solid transparent;
+    border-right: 15rpx solid #C3170A;
+    border-bottom: 15rpx solid transparent;
+}
+
+
+/*候药、候诊模板样式*/
+.progress-wrp{padding: 15rpx 30rpx}
+.progress-info{
+  border-bottom: 1px dotted #E6E6E6;
+  padding-bottom: 15rpx;
+}
+.progress-info li{
+  margin:15rpx 0;
+}
+.prg-list-hint{padding: 36rpx 0 25rpx 0}
+.prg-list-title{background: #FBF3EF;}
+.prg-list span{display: inline-block;padding: 26rpx 0;}
+.prg-list p{width: 100%;}
+
+.img-responsive{
+  width: 100%;
+  height: 100%;
+}
+
+.search{
+  position: relative;
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
+  height: 120rpx;
+  font-size: 30rpx;
+}
+.search .search-input{
+  height: 70rpx;
+  float: left;
+  position: relative;
+  background: white;
+  width: 100%;
+   border: 1rpx solid #cccccc;
+   border-radius: 8rpx;
+}
+.search.focus .search-input{
+  width: 87%;
+}
+.search .search-btn{
+  width: 0;
+  display: none
+}
+
+.search .search-input input,.search .search-input .input-view{
+  height: 70rpx;
+  margin-left: 50rpx;
+  margin-right: 50rpx;
+  padding-left:30rpx;
+  line-height: 70rpx;
+}
+.search  .search-input .search-icon{
+  position: absolute;
+  top: 50%;
+  left: 10rpx;
+  transform: translate3D(0,-50%,0);
+}
+.search .search-input .search-cancel{
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 10rpx;
+  margin-top: -2rpx;
+  transform: translate3D(0,-50%,0);
+}
+.search.focus .search-input .search-cancel{
+  display: block;
+}
+.search.focus  .search-btn{
+  text-align: right;
+  display: block;
+  float: right;
+  width: 12%;
+  font-size: 32rpx;
+  line-height: 80rpx;
+  text-align: center;
+}
+.tmp-doctor-list{
+  box-shadow:4rpx 4rpx 5rpx #cccccc;
+}
+.tmp-doctor-item{
+  background: white;
+  padding: 30rpx;
+  /* box-sizing: border-box; */
+}
+.tmp-doctor-item .doctor-info{
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: flex;
+   padding-bottom: 20rpx;
+}
+.tmp-doctor-item .doctor-info .doctor-photo{
+  border-radius: 50%;
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+}
+.tmp-doctor-item .doctor-info .doctor-detail{
+  /* flex: 1; */
+  width: 60%;
+  font-size: 28rpx;
+}
+.tmp-doctor-item .doctor-info .doctor-btn{
+  width: 150rpx;
+  text-align: center;
+}
+.tmp-doctor-item .doctor-info .doctor-btn .btn-small{
+  height: 60rpx;
+  width:120rpx;
+  border-radius: 10rpx;
+  line-height: 60rpx;
+  padding: 0rpx;
+  margin-top:30rpx;
+}
+.tmp-doctor-item .goodat{
+  padding-top: 20rpx;
+  border-top: 1rpx dashed #e6e6e6;
+  line-height: 1.5em;
+  font-size: 26rpx;
+}
+
+.page{
+  background: #f9f3f3;
+  height: 100%;
+}
+/*底部支付*/
+.bottom-pay-wrp{padding-left:30rpx; border-top:1px solid #CCCCCC;background: white;position: absolute;bottom: 0;width: 100%;box-sizing: border-box;}
+.bottom-pay-btn{border-radius:0;text-align: center;width: 250rpx;height: 98rpx;line-height: 98rpx;font-size:32rpx}/*支付按钮*/
+
+/*list模板样式  */
+.tmp-list{
+  background: inherit;
+}
+.tmp-list .tmp-list-item{
+  box-sizing: border-box;
+  height: 90rpx;
+  line-height: 90rpx !important;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+.tmp-list .tmp-list-item:last-child{
+  border: none;
+}
+.padding-content{
+  padding: 30rpx;
+  /* background: white; */
+  margin-top: 20rpx;
+  box-sizing: content-box;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+/*loading*/
+.loading,.end{
+  padding: 40rpx 0;
+  text-align: center;
+  color:#999999;
+  /* background: white; */
+}
+.loading-img{width: 80rpx;height: 80rpx;vertical-align: middle;margin-right: 5rpx;}
+
+
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+import Promise from 'promise-polyfill';
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index'
+    ],
+    window: {
+      "backgroundTextStyle": "dark",
+      "navigationBarBackgroundColor": "#333333",
+      "navigationBarTitleText": "固生堂+",
+      "navigationBarTextStyle": "white",
+      "backgroundColor": "#f9f3f3"
+    }
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix');
+    this.use('promisify');
+  }
+
+  onLaunch() {
+    this.testAsync()
+  }
+
+  sleep (s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async testAsync () {
+    const data = await this.sleep(3)
+    console.log(data)
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+}
+</script>
